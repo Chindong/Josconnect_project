@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Order #{{ order.pk }} | JosConnect{% endblock %}
+{% block content %}
+<section class="order-card">
+  <p class="eyebrow">ORDER CONFIRMATION</p><h1>Order #{{ order.pk }}</h1>
+  <span class="status-pill">{{ order.get_status_display }}</span>
+  <div class="order-lines">
+    {% for item in order.items.all %}
+      <div><span>{{ item.quantity }} × {{ item.product_name }}</span><strong>₦{{ item.line_total }}</strong></div>
+    {% endfor %}
+  </div>
+  <div class="order-total"><span>Items</span><strong>₦{{ order.item_subtotal }}</strong></div>
+  <div class="order-total"><span>Delivery</span><strong>₦{{ order.delivery_fee }}</strong></div>
+  <div class="order-total"><span>JosConnect service commission</span><strong>₦{{ order.platform_commission }}</strong></div>
+  <div class="order-total grand-total"><span>Total</span><strong>₦{{ order.customer_total }}</strong></div>
+  <p class="muted">Payment: {{ order.get_payment_method_display }}</p>
+</section>
+{% endblock %}

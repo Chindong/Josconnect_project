@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Discover local shops | JosConnect{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">LOCAL COMMERCE · JOS, PLATEAU STATE</p>
+    <h1>Your neighbourhood shops,<br><span>all in one place.</span></h1>
+    <p class="hero-copy">Find meals, groceries and everyday essentials from local businesses.</p>
+    <form class="search-form" method="get">
+      <input type="search" name="q" value="{{ query }}" placeholder="Search shops or products">
+      <button class="button" type="submit">Search</button>
+    </form>
+  </div>
+  <div class="hero-mark"><span>JC</span><small>SHOP LOCAL</small></div>
+</section>
+ 
+<section class="section-heading">
+  <div><p class="eyebrow">DISCOVER</p><h2>Available shops</h2></div>
+</section>
+<div class="shop-grid">
+  {% for shop in shops %}
+    <a class="shop-card" href="{% url 'catalogue:shop_detail' shop.slug %}">
+      <div class="shop-avatar">{{ shop.name|slice:":1"|upper }}</div>
+      <div><h3>{{ shop.name }}</h3><p>{{ shop.address|truncatechars:70 }}</p>
+      <span class="text-link">View shop →</span></div>
+    </a>
+  {% empty %}<p class="empty-state">Shops will appear here as they join JosConnect.</p>{% endfor %}
+</div>
+ 
+<section class="section-heading"><div><p class="eyebrow">FRESH FINDS</p><h2>Popular products</h2></div></section>
+<div class="product-grid">
+  {% for product in products %}
+    <article class="product-card">
+      {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}">{% else %}
+        <div class="product-placeholder">{{ product.name|slice:":1"|upper }}</div>{% endif %}
+      <div class="product-info"><p class="product-shop">{{ product.shop.name }}</p>
+        <h3>{{ product.name }}</h3><strong>₦{{ product.price|floatformat:2 }}</strong>
+      </div>
+    </article>
+  {% empty %}<p class="empty-state">No products match your search yet.</p>{% endfor %}
+</div>
+{% endblock %}

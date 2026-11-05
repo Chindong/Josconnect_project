@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Checkout | JosConnect{% endblock %}
+{% block content %}
+<section class="checkout-layout">
+  <div><p class="eyebrow">FINAL STEP</p><h1>Complete your order</h1>
+    <p class="muted">Ordering from {{ shop.name }}</p>
+    <form method="post" class="form-stack">
+      {% csrf_token %}
+{% for field in form %}
+        <label>{{ field.label }}{{ field }}
+          {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+        </label>
+      {% endfor %}
+      <button class="button button-full" type="submit">Place order</button>
+    </form>
+  </div>
+  <aside class="checkout-note"><h3>Before you confirm</h3>
+    <p>Review the delivery address and payment method carefully. The final order total and applicable fees must be shown clearly before payment.</p>
+  </aside>
+</section>
+{% endblock %}

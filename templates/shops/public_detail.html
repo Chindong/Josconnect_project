@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ shop.name }} | JosConnect{% endblock %}
+{% block content %}
+<section class="shop-banner">
+  <p class="eyebrow">JOSCONNECT VERIFIED SHOP</p>
+  <h1>{{ shop.name }}</h1><p>{{ shop.description }}</p>
+  <small>{{ shop.address }} · {{ shop.phone }}</small>
+</section>
+<div class="section-heading"><div><p class="eyebrow">SHOP CATALOGUE</p><h2>Available items</h2></div></div>
+<div class="product-grid">
+{% for product in products %}
+  <article class="product-card">
+    {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}">{% else %}
+      <div class="product-placeholder">{{ product.name|slice:":1"|upper }}</div>{% endif %}
+    <div class="product-info"><h3>{{ product.name }}</h3><p>{{ product.description|truncatechars:85 }}</p>
+      <strong>₦{{ product.price|floatformat:2 }}</strong>
+    </div>
+  </article>
+{% empty %}<p class="empty-state">This shop has not listed available items.</p>{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Create account | JosConnect{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <p class="eyebrow">JOIN JOSCONNECT</p><h1>Create your {{ role }} account</h1>
+  <form method="post" class="form-stack">
+    {% csrf_token %}
+    {% for field in form %}
+      <label>{{ field.label }}{{ field }}
+        {% if field.help_text %}<small>{{ field.help_text|safe }}</small>{% endif %}
+        {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+      </label>
+    {% endfor %}
+    <button class="button button-full" type="submit">Create account</button>
+  </form>
+</section>
+{% endblock %}
