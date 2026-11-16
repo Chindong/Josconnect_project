@@ -1,14 +1,35 @@
+<!-- templates/accounts/login.html -->
 {% extends "base.html" %}
 {% block title %}Sign in | JosConnect{% endblock %}
+
 {% block content %}
 <section class="auth-card">
-  <p class="eyebrow">WELCOME BACK</p><h1>Sign in</h1>
+  <p class="eyebrow">WELCOME BACK</p>
+  <h1>Sign in to JosConnect</h1>
+
   <form method="post" class="form-stack">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    <label>Sign in as:
+      <select name="selected_role" class="form-control">
+        <option value="CUSTOMER" {% if selected_role == "CUSTOMER" %}selected{% endif %}>Customer</option>
+        <option value="SHOP_OWNER" {% if selected_role == "SHOP_OWNER" %}selected{% endif %}>Shop Owner</option>
+        <option value="RIDER" {% if selected_role == "RIDER" %}selected{% endif %}>Dispatch Rider</option>
+      </select>
+    </label>
+
+    {% for field in form %}
+      <label>{{ field.label }}{{ field }}
+        {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+      </label>
+    {% endfor %}
+
     {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
     <button class="button button-full" type="submit">Sign in</button>
   </form>
-  <p class="form-foot">New here? <a href="{% url 'accounts:signup' 'customer' %}">Create an account</a></p>
+
+  <p class="form-foot">
+    New to JosConnect? <a href="{% url 'accounts:signup' 'customer' %}">Create an account</a>
+  </p>
 </section>
 {% endblock %}

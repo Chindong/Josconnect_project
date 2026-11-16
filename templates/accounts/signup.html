@@ -1,17 +1,39 @@
+<!-- templates/accounts/signup_choice.html -->
 {% extends "base.html" %}
-{% block title %}Create account | JosConnect{% endblock %}
+{% block title %}Join JosConnect | Choose Account Type{% endblock %}
+
 {% block content %}
-<section class="auth-card">
-  <p class="eyebrow">JOIN JOSCONNECT</p><h1>Create your {{ role }} account</h1>
-  <form method="post" class="form-stack">
-    {% csrf_token %}
-    {% for field in form %}
-      <label>{{ field.label }}{{ field }}
-        {% if field.help_text %}<small>{{ field.help_text|safe }}</small>{% endif %}
-        {% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
-      </label>
-    {% endfor %}
-    <button class="button button-full" type="submit">Create account</button>
-  </form>
+<section class="auth-card" style="max-width: 680px;">
+  <p class="eyebrow">JOIN JOSCONNECT</p>
+  <h1>How would you like to use JosConnect?</h1>
+  <p class="muted" style="margin-bottom: 24px;">Select an account type below to get started.</p>
+
+  <div class="form-stack">
+    <a href="{% url 'accounts:signup' 'customer' %}" class="shop-card" style="justify-content: space-between;">
+      <div>
+        <h3>I am a Customer</h3>
+        <p>Browse local shops in Jos, place orders, and get items delivered.</p>
+      </div>
+      <span class="button button-small">Sign up →</span>
+    </a>
+
+    <a href="{% url 'accounts:signup' 'shop' %}" class="shop-card" style="justify-content: space-between;">
+      <div>
+        <h3>I am a Shop Owner</h3>
+        <p>List your store and products, accept orders, and grow local sales.</p>
+      </div>
+      <span class="button button-small">Sign up →</span>
+    </a>
+
+    <a href="{% url 'accounts:signup' 'rider' %}" class="shop-card" style="justify-content: space-between;">
+      <div>
+        <h3>I am a Dispatch Rider</h3>
+        <p>Deliver packages across Jos and earn per completed drop-off.</p>
+      </div>
+      <span class="button button-small">Sign up →</span>
+    </a>
+  </div>
+
+  <p class="form-foot">Already have an account? <a href="{% url 'accounts:login' %}">Sign in here</a></p>
 </section>
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Rider Registration | JosConnect{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <p class="eyebrow">DISPATCH FLEET · JOS</p>
+  <h1>Register as a Dispatch Rider</h1>
+  <form method="post" class="form-stack">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+    <button class="button button-full" type="submit">Submit Rider Application</button>
+  </form>
+</section>
+{% endblock %}
